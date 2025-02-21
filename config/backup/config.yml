@@ -1,0 +1,12 @@
+containers:
+  bedrock:
+    - name: mc_bedrock
+      worlds:
+        - /data/worlds/world
+schedule:
+  daily: 05:00
+
+trim:
+  trimDays: 4
+  keepDays: 7
+  minKeep: 4
