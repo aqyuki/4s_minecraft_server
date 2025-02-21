@@ -14,7 +14,7 @@ services:
       ALLOW_CHEATS: false
       MAX_PLAYERS: 50
       ONLINE_MODE: true
-      ALLOW_LIST: true
+      ALLOW_LIST: false
       PLAYER_IDLE_TIMEOUT: 0
       MAX_THREADS: 8
       DEFAULT_PLAYER_PERMISSION: "member" # 参加者の権限
