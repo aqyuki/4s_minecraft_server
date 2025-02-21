@@ -22,6 +22,7 @@ services:
       OP_PERMISSION_LEVEL: 4
       LEVEL_NAME: "world"
       VERSION: "LATEST"
+      VIEW_DISTANCE: 16
     ports:
       - "19132:19132/udp"
     volumes:
