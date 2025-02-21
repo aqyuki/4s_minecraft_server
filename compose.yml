@@ -28,6 +28,11 @@ services:
     volumes:
       - ./data:/data
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          cpus: 5
+          memory: 7G
   backups:
     container_name: mc_bedrock_backups
     image: kaiede/minecraft-bedrock-backup
