@@ -16,7 +16,7 @@ services:
       ONLINE_MODE: true
       ALLOW_LIST: false
       PLAYER_IDLE_TIMEOUT: 0
-      MAX_THREADS: 8
+      MAX_THREADS: 0
       DEFAULT_PLAYER_PERMISSION: "member" # 参加者の権限
       OPS: "2535457866812073" #OP権限を持つプレイヤーのXUID.
       OP_PERMISSION_LEVEL: 4
