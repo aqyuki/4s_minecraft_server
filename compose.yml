@@ -43,4 +43,4 @@ services:
     volumes:
       - ./config/backup:/config
       - ./backups:/backups
-        ./data:/data
+      - ./data:/data
