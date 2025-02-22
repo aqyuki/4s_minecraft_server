@@ -10,3 +10,5 @@ trim:
   trimDays: 4
   keepDays: 7
   minKeep: 4
+
+loggingLevel: trace
