@@ -28,6 +28,8 @@ services:
     volumes:
       - ./data:/data
     restart: unless-stopped
+    networks:
+      - minecraft_server
     deploy:
       resources:
         reservations:
@@ -44,3 +46,8 @@ services:
       - ./config/backup:/config
       - ./backups:/backups
       - ./data:/data
+    networks:
+      - minecraft_server
+
+networks:
+  minecraft_server:
