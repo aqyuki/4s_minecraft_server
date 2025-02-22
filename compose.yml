@@ -43,6 +43,7 @@ services:
     environment:
       TZ: "Asia/Tokyo"
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ./config/backup:/config
       - ./backups:/backups
       - ./data:/data
