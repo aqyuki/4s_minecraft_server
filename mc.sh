@@ -18,6 +18,7 @@ start_server() {
     echo "Server started."
   else
     echo "Server is already running."
+    exit 1
   fi
 }
 
@@ -30,8 +31,32 @@ stop_server() {
     echo "Server stopped."
   else
     echo "Server is not running."
+    exit 1
   fi
 }
+
+# Send message to the Minecraft server
+send_message() {
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Sending message to the Minecraft server..."
+    tmux send-keys -t "$SESSION_NAME" "say $1" C-m
+    echo "Message sent: $1"
+  else
+    echo "Server is not running. Cannot send message."
+    exit 1
+  fi
+}
+
+# Attach to the Minecraft server console
+attach_server() {
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    tmux attach -t "$SESSION_NAME"
+  else
+    echo "Server is not running."
+    exit 1
+  fi
+}
+
 
 # Display usage information
 show_help() {
@@ -45,6 +70,16 @@ case "$1" in
     ;;
   stop)
     stop_server
+    ;;
+  restart)
+    stop_server
+    start_server
+    ;;
+  msg)
+    send_message "$2"
+    ;;
+  attach)
+    tmux attach -t "$SESSION_NAME"
     ;;
   help)
     show_help
