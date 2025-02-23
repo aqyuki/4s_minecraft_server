@@ -4,3 +4,6 @@
 # server programs
 server/*
 !server/server.properties
+
+# secret file
+.env
