@@ -1,0 +1,10 @@
+{
+  "username": "Minecraft Server",
+  "embeds": [
+    {
+      "title": "{{TITLE}}",
+      "description": "{{DESCRIPTION}}",
+      "color": 65280
+    }
+  ]
+}
