@@ -1,4 +1,9 @@
-data
-
 # backup files
 *.zip
+
+# server programs
+server/*
+!server/server.properties
+
+# secret file
+.env

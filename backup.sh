@@ -6,9 +6,9 @@ set -e
 
 # set variables
 SCRIPT_DIR="$(cd $(dirname $0); pwd)"
-WORLD_DIR="$SCRIPT_DIR/data/worlds/world"
+WORLD_DIR="$SCRIPT_DIR/server/worlds/world"
 BACKUP_DIR="$SCRIPT_DIR/backups"
-BACKUP_FILE="$BACKUP_DIR/$(date +%F-%H-%M-%S)-world.zip"
+BACKUP_FILE="$BACKUP_DIR/$(date +%F-%H-%M)-world.zip"
 
 # if the backup directory doesn't exist, create it
 if [ ! -d "$BACKUP_DIR" ]; then
