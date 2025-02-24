@@ -28,7 +28,7 @@ function send_webhook_stop() {
     -d "$(jq --arg title "Server stop" \
              --arg description "サーバーが停止しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
-             "$SCRIPT_DIR"asset/message.json)"
+             "$SCRIPT_DIR"/asset/message.json)"
 }
 
 function send_webhook_start() {
@@ -37,7 +37,7 @@ function send_webhook_start() {
     -d "$(jq --arg title "Server start" \
              --arg description "サーバーが再起動しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
-             "$SCRIPT_DIR"asset/message.json)"
+             "$SCRIPT_DIR"/asset/message.json)"
 }
 
 function send_backup_result() {
@@ -46,7 +46,7 @@ function send_backup_result() {
     -d "$(jq --arg title "Backup complete" \
              --arg description "バックアップが完了しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
-             "$SCRIPT_DIR"asset/message.json)"
+             "$SCRIPT_DIR"/asset/message.json)"
 }
 
 # Main script execution
