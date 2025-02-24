@@ -9,53 +9,53 @@ readonly SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Global utility functions
 function printl() {
-  echo "[$(date)] $1"
+  /usr/bin/echo "[$(date)] $1"
 }
 
 # Send webhook
 function send_webhook_notice() {
-  curl -X POST "$WEBHOO_URL" \
+  /usr/bin/curl -X POST "$WEBHOO_URL" \
     -H 'Content-Type: application/json' \
-    -d "$(jq --arg title "Notice" \
-             --arg description "$(date -d '5 minutes' +'%Y-%m-%d %H:%M:%S')より､サーバーの再起動とバックアップを行います｡" \
+    -d "$(/usr/bin/jq --arg title "Notice" \
+             --arg description "$(/usr/bin/date -d '5 minutes' +'%Y-%m-%d %H:%M:%S')より､サーバーの再起動とバックアップを行います｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
              asset/message.json)"
 }
 
 function send_webhook_stop() {
-  curl -X POST "$WEBHOO_URL" \
+  /usr/bin/curl -X POST "$WEBHOO_URL" \
     -H 'Content-Type: application/json' \
-    -d "$(jq --arg title "Server stop" \
+    -d "$(/usr/bin/jq --arg title "Server stop" \
              --arg description "サーバーが停止しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
              asset/message.json)"
 }
 
 function send_webhook_start() {
-  curl -X POST "$WEBHOO_URL" \
+  /usr/bin/curl -X POST "$WEBHOO_URL" \
     -H 'Content-Type: application/json' \
-    -d "$(jq --arg title "Server start" \
+    -d "$(/usr/bin/jq --arg title "Server start" \
              --arg description "サーバーが再起動しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
              asset/message.json)"
 }
 
 function send_backup_result() {
-  curl -X POST "$WEBHOO_URL" \
+  /usr/bin/curl -X POST "$WEBHOO_URL" \
     -H 'Content-Type: application/json' \
-    -d "$(jq --arg title "Backup complete" \
+    -d "$(/usr/bin/jq --arg title "Backup complete" \
              --arg description "バックアップが完了しました｡" \
              '.embeds[0].title = $title | .embeds[0].description = $description' \
              asset/message.json)"
 }
 
 # Main script execution
-./mc.sh msg "§9[Server]§r $(date -d "5 minutes" +"%Y-%m-%d %H:%M")より､サーバーの再起動とバックアップを開始します｡"
+$SCRIPT_DIR/mc.sh msg "§9[Server]§r $(/usr/bin/date -d "5 minutes" +"%Y-%m-%d %H:%M")より､サーバーの再起動とバックアップを開始します｡"
 send_webhook_notice
 sleep 5m
 
 printl "Stopping server"
-if ./mc.sh stop > /dev/null; then
+if $SCRIPT_DIR/mc.sh stop > /dev/null; then
   printl "Server stopped successfully"
   send_webhook_stop
 else
@@ -64,7 +64,7 @@ else
 fi
 
 printl "Starting backup process"
-if ./backup.sh; then
+if $SCRIPT_DIR/backup.sh; then
   printl "Backup completed successfully."
   send_backup_result
 else
@@ -73,7 +73,7 @@ else
 fi
 
 printl "Backup completed successfully. Restarting server"
-if ./mc.sh start; then
+if $SCRIPT_DIR/mc.sh start > /dev/null; then
   printl "Server restarted successfully"
   send_webhook_start
 else
