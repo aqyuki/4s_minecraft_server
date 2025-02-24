@@ -5,54 +5,54 @@
 set -e
 
 # Global variables
-readonly SCRIPT_DIR="$(cd "$(/usr/bin/dirname "$0")" && /usr/bin/pwd)"
+readonly SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 readonly SERVER_DIR="$SCRIPT_DIR/server"
 readonly SESSION_NAME="minecraft"
 
 # Start the Minecraft server
 start_server() {
-  if ! /usr/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    /usr/bin/echo "tmux session ($SESSION_NAME) not found. Creating a new session and starting the Minecraft server..."
-    /usr/bin/tmux new-session -d -s "$SESSION_NAME"
-    /usr/bin/tmux send-keys -t "$SESSION_NAME" "cd \"$SERVER_DIR\" && LD_LIBRARY_PATH=. ./bedrock_server" C-m
-    /usr/bin/echo "Server started."
+  if ! tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "tmux session ($SESSION_NAME) not found. Creating a new session and starting the Minecraft server..."
+    tmux new-session -d -s "$SESSION_NAME"
+    tmux send-keys -t "$SESSION_NAME" "cd \"$SERVER_DIR\" && LD_LIBRARY_PATH=. ./bedrock_server" C-m
+    echo "Server started."
   else
-    /usr/bin/echo "Server is already running."
+    echo "Server is already running."
     exit 1
   fi
 }
 
 # Stop the Minecraft server
 stop_server() {
-  if /usr/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    /usr/bin/echo "Stopping the Minecraft server..."
-    /usr/bin/tmux send-keys -t "$SESSION_NAME" "stop" C-m
-    /usr/bin/tmux kill-session -t "$SESSION_NAME"
-    /usr/bin/echo "Server stopped."
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Stopping the Minecraft server..."
+    tmux send-keys -t "$SESSION_NAME" "stop" C-m
+    tmux kill-session -t "$SESSION_NAME"
+    echo "Server stopped."
   else
-    /usr/bin/echo "Server is not running."
+    echo "Server is not running."
     exit 1
   fi
 }
 
 # Send message to the Minecraft server
 send_message() {
-  if /usr/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    /usr/bin/echo "Sending message to the Minecraft server..."
-    /usr/bin/tmux send-keys -t "$SESSION_NAME" "say $1" C-m
-    /usr/bin/echo "Message sent: $1"
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    echo "Sending message to the Minecraft server..."
+    tmux send-keys -t "$SESSION_NAME" "say $1" C-m
+    echo "Message sent: $1"
   else
-    /usr/bin/echo "Server is not running. Cannot send message."
+    echo "Server is not running. Cannot send message."
     exit 1
   fi
 }
 
 # Attach to the Minecraft server console
 attach_server() {
-  if /usr/bin/tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
-    /usr/bin/tmux attach -t "$SESSION_NAME"
+  if tmux has-session -t "$SESSION_NAME" 2>/dev/null; then
+    tmux attach -t "$SESSION_NAME"
   else
-    /usr/bin/echo "Server is not running."
+    echo "Server is not running."
     exit 1
   fi
 }
@@ -60,7 +60,7 @@ attach_server() {
 
 # Display usage information
 show_help() {
-  /usr/bin/echo "Usage: $0 {start|stop|help|restart|msg|attach}"
+  echo "Usage: $0 {start|stop|help}"
 }
 
 # Handle script arguments
