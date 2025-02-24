@@ -50,12 +50,12 @@ function send_backup_result() {
 }
 
 # Main script execution
-./mc.sh msg "§9[Server]§r $(date -d "5 minutes" +"%Y-%m-%d %H:%M")より､サーバーの再起動とバックアップを開始します｡"
+$SCRIPT_DIR/mc.sh msg "§9[Server]§r $(date -d "5 minutes" +"%Y-%m-%d %H:%M")より､サーバーの再起動とバックアップを開始します｡"
 send_webhook_notice
 sleep 5m
 
 printl "Stopping server"
-if ./mc.sh stop > /dev/null; then
+if $SCRIPT_DIR/mc.sh stop > /dev/null; then
   printl "Server stopped successfully"
   send_webhook_stop
 else
@@ -64,7 +64,7 @@ else
 fi
 
 printl "Starting backup process"
-if ./backup.sh; then
+if $SCRIPT_DIR/backup.sh; then
   printl "Backup completed successfully."
   send_backup_result
 else
@@ -73,7 +73,7 @@ else
 fi
 
 printl "Backup completed successfully. Restarting server"
-if ./mc.sh start; then
+if $SCRIPT_DIR/mc.sh start; then
   printl "Server restarted successfully"
   send_webhook_start
 else
